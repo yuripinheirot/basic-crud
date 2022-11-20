@@ -1,5 +1,10 @@
 import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { User } from "./entity/user.entity"
+import app from './app'
+
+app.use('/', (req,res) => {
+    res.send('ok')
+});
 
 AppDataSource.initialize().then(async () => {
 

@@ -1,0 +1,15 @@
+{
+  "name": "basic-crud",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yuri Pinheiro <yuripinheirot@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn build && node ./build/index.js",
+    "build": "rm -rf build && npx tsc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.9.3"
+  }
+}

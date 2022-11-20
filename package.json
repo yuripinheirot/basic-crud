@@ -8,7 +8,12 @@
     "start": "yarn build && node ./build/index.js",
     "build": "rm -rf build && npx tsc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/node": "^18.11.9",
+    "mongodb": "^3.6.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.10"
+  },
   "devDependencies": {
     "typescript": "^4.9.3"
   },
@@ -16,4 +21,3 @@
     "node": "^16"
   }
 }
-

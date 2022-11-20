@@ -1,23 +1,27 @@
 {
-  "name": "basic-crud",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "Yuri Pinheiro <yuripinheirot@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-    "start": "yarn build && node ./build/index.js",
-    "build": "rm -rf build && npx tsc"
-  },
-  "dependencies": {
-    "@types/node": "^18.11.9",
-    "mongodb": "^3.6.0",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.10"
-  },
-  "devDependencies": {
-    "typescript": "^4.9.3"
-  },
-  "engines": {
-    "node": "^16"
-  }
+   "name": "basic-crud",
+   "version": "1.0.0",
+   "main": "index.js",
+   "author": "Yuri Pinheiro <yuripinheirot@gmail.com>",
+   "license": "MIT",
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "build": "rm -rf build && npx tsc",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "dependencies": {
+      "@types/node": "^18.11.9",
+      "mongodb": "^3.6.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.3.10",
+      "pg": "^8.4.0"
+   },
+   "devDependencies": {
+      "typescript": "4.5.2",
+      "ts-node": "10.7.0",
+      "@types/node": "^16.11.10"
+   },
+   "engines": {
+      "node": "^16"
+   }
 }

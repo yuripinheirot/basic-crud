@@ -10,8 +10,4 @@ const port = process.env.PORT || 3003
 app.use(express.json())
 app.use(cors())
 
-const server = app.listen(port, () => {
-  console.info(`Server listening on ${port}`)
-})
-
 export default app

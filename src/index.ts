@@ -1,20 +1,37 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./entity/User"
+import { AppDataSource } from './data-source'
+import { Account, User, Transaction } from './entity'
 
-AppDataSource.initialize().then(async () => {
+const newAccount = new Account()
+newAccount.balance = 100.5
 
-    console.log("Inserting a new user into the database...")
-    const user = new User()
-    user.firstName = "Timber"
-    user.lastName = "Saw"
-    user.age = 25
-    await AppDataSource.manager.save(user)
-    console.log("Saved a new user with id: " + user.id)
+const newAccount2 = new Account()
+newAccount.balance = 200.5
 
-    console.log("Loading users from the database...")
-    const users = await AppDataSource.manager.find(User)
-    console.log("Loaded users: ", users)
+const newUser = new User()
+newUser.username = 'test@test.com'
+newUser.password = 'password'
+newUser.accountId = newAccount
 
-    console.log("Here you can setup and run express / fastify / any other framework.")
+const newUser2 = new User()
+newUser.username = 'test2@test.com'
+newUser.password = 'password2'
+newUser.accountId = newAccount2
 
-}).catch(error => console.log(error))
+const newTransaction = new Transaction()
+newTransaction.createdAt = new Date()
+newTransaction.creditAccountId = newAccount2
+newTransaction.debitedAccountId = newAccount
+newTransaction.value = 50
+
+AppDataSource.initialize()
+  .then(async () => {
+    console.log('Database connected succesfully!')
+    await AppDataSource.manager.save(newAccount)
+    await AppDataSource.manager.save(newAccount2)
+    await AppDataSource.manager.save(newUser)
+    await AppDataSource.manager.save(newUser2)
+    await AppDataSource.manager.save(newTransaction)
+
+    console.log('Records saved succesfully!')
+  })
+  .catch((error) => console.log(error))

@@ -5,17 +5,19 @@
    "author": "Yuri Pinheiro <yuripinheirot@gmail.com>",
    "license": "MIT",
    "scripts": {
-      "start": "ts-node src/index.ts",
+      "tsc": "npx tsc -w",
+      "start": "nodemon ./build/index.js",
       "build": "rm -rf build && npx tsc",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "up": "yarn build && docker compose up",
+      "upd": "yarn build && docker compose up -d",
+      "down": "docker compose down"
    },
    "dependencies": {
-      "@types/node": "^18.11.9",
       "dotenv": "^16.0.3",
-      "mongodb": "^3.6.0",
-      "pg": "^8.4.0",
+      "mongodb": "^4.12.0",
+      "nodemon": "^2.0.20",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.3.10"
+      "typeorm": "^0.3.10"
    },
    "devDependencies": {
       "@types/node": "^16.11.10",

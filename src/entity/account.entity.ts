@@ -10,8 +10,8 @@ export class Account {
   balance: number
 
   @OneToMany(() => Transaction, (transaction) => transaction.creditAccountId)
-  creditAccount: Transaction[]
+  creditAccountId: Transaction[]
 
   @OneToMany(() => Transaction, (transaction) => transaction.debitedAccountId)
-  debitedAccount: Transaction[]
+  debitedAccountId: Transaction[]
 }

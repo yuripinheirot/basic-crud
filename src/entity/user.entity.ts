@@ -14,5 +14,5 @@ export class User {
 
   @OneToOne(() => Account)
   @JoinColumn()
-  accountId: Account
+  accountId: ObjectID
 }

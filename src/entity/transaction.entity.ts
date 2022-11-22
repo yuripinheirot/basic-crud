@@ -7,10 +7,10 @@ export class Transaction {
   id: ObjectID
 
   @ManyToOne(() => Account, (account) => account.id)
-  debitedAccountId: Account
+  debitedAccountId: ObjectID
 
   @ManyToOne(() => Account, (account) => account.id)
-  creditAccountId: Account
+  creditAccountId: ObjectID
 
   @Column()
   value: number

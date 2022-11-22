@@ -1,18 +1,33 @@
+import { MissingParamsError } from '../errors'
 import { Controller, HttpRequest, HttpResponse } from '../protocols'
-import { MissingParamsErrorValidation, Validations } from '../validations'
 
 export class SignUpController implements Controller {
-  constructor(private readonly validations: Validations) {}
+  constructor() {}
 
   handle = async (httpRequest: HttpRequest): Promise<HttpResponse> => {
-    this.validations.execute([
-      new MissingParamsErrorValidation(['email', 'password', 'passwordConfirmation'], httpRequest),
-    ])
+    try {
+      const { email, password, passwordConfirmation } = httpRequest.body
+      const requiredFields = ['email', 'password', 'passwordConfirmation']
+      const requiredFieldsNotProvided = []
 
-    const { email, password, passwordConfirmation } = httpRequest.body
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          requiredFieldsNotProvided.push(field)
+        }
+      }
 
-    return new Promise<HttpResponse>((resolve) =>
-      resolve({ statusCode: 200, body: httpRequest.body })
-    )
+      if (requiredFieldsNotProvided.length) {
+        throw new MissingParamsError(requiredFieldsNotProvided)
+      }
+
+      return new Promise<HttpResponse>((resolve) =>
+        resolve({ statusCode: 200, body: httpRequest.body })
+      )
+    } catch (error) {
+      return {
+        statusCode: 400,
+        body: error,
+      }
+    }
   }
 }

@@ -11,13 +11,8 @@ const mockHttpRequest: HttpRequest = {
   },
 }
 
-class ValidationsStub implements Validations {
-  execute = (validation: Validation[]) => {}
-}
-
 const makeSut = () => {
-  const validationStub = new ValidationsStub()
-  const sut = new SignUpController(validationStub)
+  const sut = new SignUpController()
 
   return {
     sut,

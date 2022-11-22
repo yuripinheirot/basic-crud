@@ -1,52 +1,7 @@
-export type HttpRequest = {
-  body?: any
-}
-
-export type HttpResponse = {
-  statusCode: number
-  body: any
-}
-
-export interface Controller {
-  handle: (httpRequest: HttpRequest) => Promise<HttpResponse>
-}
-
-export class MissingParamsError extends Error {
-  constructor(private readonly missingParamsList: string[]) {
-    super()
-    this.message = `Required fields are not provided: ${this.missingParamsList.join(', ')}`
-    this.name = 'MissingParamsError'
-  }
-}
-
-export const badRequest = (error: Error): HttpResponse => {
-  return {
-    statusCode: 400,
-    body: error,
-  }
-}
-
-export class SignUpController implements Controller {
-  handle = async (httpRequest: HttpRequest): Promise<HttpResponse> => {
-    const { email, password, passwordConfirmation } = httpRequest.body
-    const requiredFields = ['email', 'password', 'passwordConfirmation']
-    const requiredFieldsNotProvided = []
-
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field]) {
-        requiredFieldsNotProvided.push(field)
-      }
-    }
-
-    if (requiredFieldsNotProvided.length) {
-      return badRequest(new MissingParamsError(requiredFieldsNotProvided))
-    }
-
-    return new Promise<HttpResponse>((resolve) =>
-      resolve({ statusCode: 200, body: httpRequest.body })
-    )
-  }
-}
+import { MissingParamsError } from '../errors'
+import { HttpRequest } from '../protocols'
+import { Validations, Validation } from '../validations'
+import { SignUpController } from './signup.controller'
 
 const mockHttpRequest: HttpRequest = {
   body: {
@@ -56,8 +11,13 @@ const mockHttpRequest: HttpRequest = {
   },
 }
 
+class ValidationsStub implements Validations {
+  execute = (validation: Validation[]) => {}
+}
+
 const makeSut = () => {
-  const sut = new SignUpController()
+  const validationStub = new ValidationsStub()
+  const sut = new SignUpController(validationStub)
 
   return {
     sut,
